@@ -1,0 +1,49 @@
+{% extends 'webapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h5>Address mapper</h5>
+
+<h2>Your Adresses</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Add Location</button>
+</form>
+
+<button class="btn btn-primary mt-2 mb-2" href="#">Make a Map</button>
+
+
+<table class="table mb-0">
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>GPS</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+      <tr>
+        <td>
+          {{item.address}}
+        </td>
+        <td>
+          {{item.gps}}
+        </td>
+        <td>
+          <form method="post" action="{% url 'delete_address' item.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="border-white"><small class="text-secondary">{{item.fulladdress}}</small></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock content %}
