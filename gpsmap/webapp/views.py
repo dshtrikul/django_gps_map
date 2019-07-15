@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import AddressForm
+from .forms import AddressForm, FileForm
 from .models import Address
 from .gps import gps_coord
 from .gps import GenerateMap
@@ -8,8 +8,13 @@ from .gps import GenerateMap
 def main(request):
     if request.method == 'POST':
         form = AddressForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form_f = FileForm(request.POST, request.FILES)
+        if request.FILES:
+            if form_f.is_valid():
+                form_f.save()
+        else:
+            if form.is_valid():
+                form.save()
 
         ids = list(Address.objects.all().values_list('id', flat=True))
         for id in ids:
@@ -23,9 +28,14 @@ def main(request):
         return redirect('main')
     else:
         form = AddressForm()
+        form_f = FileForm()
         items = Address.objects.all()
-        context = {'form':form , 'items':items }
+        context = {'form':form , 'form_f':form_f, 'items':items }
         return render(request, 'webapp/main.html', context)
+
+def txt_upload():
+    pass
+
 
 def render_map(request):
     map = GenerateMap()
