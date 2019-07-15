@@ -6,7 +6,8 @@ import folium
 class Address(models.Model):
 
     address = models.TextField()
-    gps = models.CharField(max_length=100)
+    latitude = models.DecimalField(max_digits=9, decimal_places=7, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=7, null=True, blank=True)
     fulladdress = models.CharField(max_length=300)
 
     # gps = models.CharField(default=lambda adr=adr:Address.get_gps(address=adr), max_length=100)

@@ -9,6 +9,7 @@ verify_ssl = true
 django-crispy-forms = "*"
 geopy = "*"
 folium = "*"
+python-secrets = "*"
 
 [requires]
 python_version = "3.7"
