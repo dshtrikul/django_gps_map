@@ -2,20 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h5>Address mapper</h5>
-
-<h2>Your Adresses</h2>
 
   <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Add Location</button>
+    <button type="submit" class="btn btn-outline-primary">Add Location</button>
   </form>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form_f|crispy }}
-  <button type="submit" class="btn btn-primary">Submit File</button>
+  <button type="submit" class="btn btn-outline-primary">Submit File</button>
 </form>
 
 <form method='post' action="{% url 'render_map' %}" target="_blank">
@@ -54,5 +51,12 @@
   </tbody>
 </table>
 
-
 {% endblock content %}
+{% block footer %}
+<div class="card-body">
+  <form method="post" action="{% url 'delete_all' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-sm ml-1">Delete all</button>
+  </form>
+</div>
+{% endblock footer %}
